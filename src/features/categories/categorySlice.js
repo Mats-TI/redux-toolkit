@@ -1,89 +1,28 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import CategoryApiService from "../../../Service/categoryService";
-
-const initialState = [];
-
-export const getCategories = createAsyncThunk("categories/get", async () => {
-  const res = await CategoryApiService.getAll();
-  return res.data;
-});
-
-export const createCategory = createAsyncThunk(
-  "categories/create",
-  async ({ title, description }) => {
-    const res = await CategoryApiService.create({ title, description });
-    return res.data;
-  }
-);
-
-export const updateCategory = createAsyncThunk(
-  "categories/update",
-  async ({ id, data }) => {
-    const res = await CategoryApiService.update(id, data);
-    return res.data;
-  }
-);
-
-export const deleteCategory = createAsyncThunk(
-  "categories/delete",
-  async ({ id }) => {
-    await CategoryApiService.remove(id);
-    return { id };
-  }
-);
-
-export const deleteAllCategories = createAsyncThunk(
-  "categories/deleteAll",
-  async () => {
-    const res = await CategoryApiService.removeAll();
-    return res.data;
-  }
-);
-
-export const findCategoriesByTitle = createAsyncThunk(
-  "categories/findByTitle",
-  async ({ title }) => {
-    const res = await CategoryApiService.findByTitle(title);
-    return res.data;
-  }
-);
+import { createSlice } from '@reduxjs/toolkit';
 
 const categorySlice = createSlice({
-  name: "category",
-  initialState,
-  extraReducers: {
-    [createCategory.fulfilled]: (state, action) => {
-      state.push(action.payload);
+  name: 'categories',
+  initialState: {
+    categories: [],
+  },
+  reducers: {
+    removeCategory(state, action) {
+      state.categories = state.categories.filter((category) => category.id !== action.payload.id);
     },
-
-    [getCategories.fulfilled]: (state, action) => {
-      return [...action.payload];
-    },
-
-    [updateCategory.fulfilled]: (state, action) => {
-      const index = state.findIndex(
+    toggleCategory(state, action) {
+      const toggleCategoryItem = state.categories.find(
         (category) => category.id === action.payload.id
       );
-      state[index] = {
-        ...state[index],
-        ...action.payload,
-      };
+      toggleCategoryItem.published = !toggleCategoryItem.published;
     },
-
-    [deleteCategory.fulfilled]: (state, action) => {
-      let index = state.findIndex(({ id }) => id === action.payload.id);
-      state.splice(index, 1);
-    },
-
-    [deleteAllCategories.fulfilled]: (state, action) => {
-      return [];
-    },
-
-    [findCategoriesByTitle.fulfilled]: (state, action) => {
-      return [...action.payload];
-    },
+  },
+  extraReducers: (builder) => {
+    
   },
 });
 
-const { reducer } = categorySlice;
+const { reducer, actions } = categorySlice;
+
+export const { removeCategory, toggleCategory } = actions;
+
 export default reducer;

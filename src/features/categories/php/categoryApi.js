@@ -7,13 +7,6 @@ export const categoryApi = createApi({
   }),
   tagTypes: ['Category'],
   endpoints: (builder) => ({
-    getCategories: builder.mutation({
-      query: () => ({
-        url: '/read.php',
-        method: 'GET',
-      }),
-      providesTags: [ 'Category' ]
-    }),
     categories: builder.query({
         query: () => '/read.php',
         providesTags: ['Category']
@@ -74,4 +67,4 @@ export const categoryApi = createApi({
   }),
 });
 
-export const { useCategoriesQuery, useGetCategoriesMutation, useGetCategoryByIdQuery, useAddCategoryMutation, useUpdateCategoryMutation, useDeleteCategoryMutation, useGetCategoriesByCategoryIdQuery, usePutAddCategoriesMutation } = categoryApi;
+export const { useCategoriesQuery, useGetCategoryByIdQuery, useAddCategoryMutation, useUpdateCategoryMutation, useDeleteCategoryMutation, useGetCategoriesByCategoryIdQuery, usePutAddCategoriesMutation } = categoryApi;

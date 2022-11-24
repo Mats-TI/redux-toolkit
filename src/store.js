@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { setupListeners } from "@reduxjs/toolkit/query";
 
-import categorySlice from './features/categories/php/categorySlice';
+import categorySlice from './features/categories/categorySlice';
 import topicSlice from './features/apps/topic/php/topicSlice';
 import { topicApi } from './features/apps/topic/php/topicApi';
 import { categoryApi } from './features/categories/php/categoryApi';

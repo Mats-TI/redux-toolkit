@@ -99,7 +99,7 @@ export default function TopicsList({ filterTopics, getTopic }) {
                   placeholder="search topics"
                   allowClear
                   style={{
-                    width: 230,
+                    width: 200,
                   }}
                 />
             }
