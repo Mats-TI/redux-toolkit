@@ -25,6 +25,9 @@ export default function TopicsList({ filterTopics, getTopic }) {
   } = useTopicsQuery();
   const { Search } = Input;
   const { Title } = Typography;
+
+  console.log(topics);
+
   if (filterTopics) {
     topics=filterTopics;
   }

@@ -8,6 +8,6 @@ app.use(cors({
 app.use(express.json());
 app.use("/", require("./topics"));
 app.use("/", require("./categories"));
-app.listen(8080, () => {
-  console.log("Listening on Port 8080");
+app.listen(8085, () => {
+  console.log("Listening on Port 8085");
 });

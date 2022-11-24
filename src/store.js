@@ -2,8 +2,8 @@ import { configureStore } from '@reduxjs/toolkit'
 import { setupListeners } from "@reduxjs/toolkit/query";
 
 import categorySlice from './features/categories/categorySlice';
-import topicSlice from './features/apps/topic/php/topicSlice';
-import { topicApi } from './features/apps/topic/php/topicApi';
+import topicSlice from './features/apps/topic/slices/topicSlice';
+import { topicApi } from './features/apps/topic/services/topicApi';
 import { categoryApi } from './features/categories/php/categoryApi';
 
 const reducer = {
