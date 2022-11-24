@@ -1,28 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import TopicsList from "./TopicsList";
 import TopicDetail from "./TopicDetail";
-import CategoriesList from "../../categories/CategoriesList";
-import {
-  useGetTopicByIdQuery,
-  useGetTopicsByCategoryIdQuery,
-} from "./services/topicApi";
-import { Box, Heading, Flex } from "@chakra-ui/react";
-import RightSidePane from "../../../components/RightSidePane";
-import { Tabs, Typography, Row, Col, Avatar, Card, Button } from "antd";
+import CategoriesList from "../../categories/php/CategoriesList";
+import { useGetTopicsMutation, useGetTopicByIdQuery, useGetTopicsByCategoryIdQuery } from './php/topicApi';
+import { Empty, Typography, Row, Col, Avatar, Card, Button, Switch } from 'antd';
+import { AbsoluteCenter, Grid, GridItem, Box,Flex, Tabs, TabList, Tab, TabPanels, TabPanel } from '@chakra-ui/react'
 import LeftSidePane from "../../../components/LeftSidePane";
+import RightSidePane from "../../../components/RightSidePane";
 
 const TopicApp = () => {
-  //@antd
-  const { Title } = Typography;
-  const { TabPane } = Tabs;
-
-  //GENERAL
   const [filter, setFilter] = useState(false);
   const [currentCategory, setCurrentCategory] = useState(null);
   const [currentCategoryId, setCurrentCategoryId] = useState(null); // initialize with skipToken to skip at first
   const [currentTopicId, setCurrentTopicId] = useState(null);
+  const [currentTopic, setCurrentTopic] = useState([]);
+  const [selection, setSelection] = useState([]);
+  const [showLeftSidebar, setShowLeftSidebar] = useState(false);
+  const [showRightSidebar, setShowRightSidebar] = useState(false);
+  const { Meta } = Card;
+  const { Title } = Typography;
 
-  const categoryChangeHandler = (category_id) => {
+  const categoryChangeHandler = (data) => {
+    setSelection(data);
+    const category_id = data;
     if (category_id === 0) {
       setFilter(false);
     } else {
@@ -31,30 +32,28 @@ const TopicApp = () => {
       setCurrentCategoryId(category_id);
     }
   };
-  const filteredTopics_rtk = useGetTopicsByCategoryIdQuery({
-    category_id: currentCategory,
-  });
-  const filterTopics = filteredTopics_rtk["data"];
+  const filteredTopics_rtk = useGetTopicsByCategoryIdQuery({ category_id: currentCategory })
+  const filterTopics = filteredTopics_rtk['data'];
+  const topicData_res = useGetTopicByIdQuery({ id: currentTopicId })
+  const currentTopic_res = topicData_res.data;
+  const addTopicData = {"id":"0","title":"","description":"","published":"","createdAt":"2022-11-23 16:22:34"}
 
   const getTopic = (id) => {
-    if (id === null) {
+    if (id === 0) {
       setCurrentTopicId(0);
+      setCurrentTopic( currentTopic.concat(addTopicData) );
     } else {
+      /// FETCH TOPIC DETAILS
       setCurrentTopicId(id);
+      setCurrentTopic( currentTopic.concat(currentTopic_res) );
     }
   };
-  const topicData_res = useGetTopicByIdQuery({ id: currentTopicId });
-  const currentTopic = topicData_res.data;
-
-  const [showLeftSidebar, setShowLeftSidebar] = useState(false);
-  const [showRightSidebar, setShowRightSidebar] = useState(false);
 
   return (
-    <Box bg="blue.600" pos="relative" h="100%">
+    <Grid pos="relative">
       {" "}
-      <Flex w="100%" h="100%" mt="1px" gap={2} pos="relative" overflow="hidden">
+      <Flex mt="1px" gap={2} pos="relative">
         <Box
-          as="aside"
           boxShadow="2xl"
           p="2rem"
           bg="white"
@@ -62,8 +61,7 @@ const TopicApp = () => {
           pos="absolute"
           top={0}
           left={showLeftSidebar ? 0 : "-30%"}
-          bottom={0}
-          transition="all 0.2s ease-in"
+          transition="all 0.3s ease-in"
           zIndex={1}
         >
           <LeftSidePane
@@ -72,51 +70,46 @@ const TopicApp = () => {
             showLeftSidebar={showLeftSidebar}
           >
             <CategoriesList
+              selection={selection}
               currentCategory={currentCategory}
               categoryChangeHandler={categoryChangeHandler}
             />
-            <TopicsList getTopic={getTopic} filterTopics={filterTopics} />
+            <TopicsList
+              getTopic={getTopic}
+              filterTopics={filterTopics}
+            />
           </LeftSidePane>
         </Box>
         <Box
-          boxShadow="lg"
           p="6"
           pos="relative"
-          backgroundColor="#e8e8e8"
           flexGrow={1}
           ml={showLeftSidebar ? "30%" : "0"}
           mr={showRightSidebar ? "30%" : "0"}
           transition="all 0.2s ease-out"
         >
           <Flex justifyContent="space-between">
-            <Heading as="h3" size="2xl">
-              Main Content Area
-            </Heading>
-            {currentTopic ? (
+            {currentTopic && currentTopic.length? ( 
               <TopicDetail
-                // {...currentTopic}
                 currentTopic={currentTopic}
               />
             ) : (
-              ""
+              <Empty className="ml-5 mt-lg-5" description="Click on a topic." />
             )}
           </Flex>
         </Box>
         <Box
           key="right-pane"
-          as="aside"
           initial={{ x: 500, opacity: 1 }}
           animate={{ x: 0, opacity: 1 }}
           exit={{ x: 500, opacity: 0 }}
-          boxShadow="lg"
           p="6"
           bg="white"
           w="30%"
-          pos="absolute"
-          top={0}
+          pos="fixed"
+          top={50}
           right={showRightSidebar ? 0 : "-30%"}
-          transition="all 0.2s ease-in"
-          bottom={0}
+          transition="all 0.3s ease-in"
         >
           <RightSidePane
             setShowLeftSidebar={setShowLeftSidebar}
@@ -124,8 +117,9 @@ const TopicApp = () => {
             showRightSidebar={showRightSidebar}
           >
             <Card
+              bordered={true}
               hoverable="true"
-              style={{ border: 2, width: 300, marginTop: 16 }}
+              style={{ border: 1, width: 300, marginTop: 16 }}
             >
               <Row>
                 <Col span={4}>
@@ -145,24 +139,28 @@ const TopicApp = () => {
               style={{ border: 2, width: 300, marginTop: 16 }}
             >
               <Tabs>
-                <TabPane tab="Title 1" key="1">
-                  <p>
-                    Search Bar <br /> Switch detail view
-                    <br /> Filter <br /> Listing with scrollable <br />{" "}
-                  </p>
-                </TabPane>
-                <TabPane tab="Tab 2" key="2">
-                  <p>Content of Tab Pane 2</p>
-                </TabPane>
-                <TabPane tab="Tab 3" key="3">
-                  <p>Content of Tab Pane 3</p>
-                </TabPane>
+                <TabList>
+                  <Tab>One</Tab>
+                  <Tab>Two</Tab>
+                  <Tab>Three</Tab>
+                </TabList>
+                <TabPanels>
+                  <TabPanel>
+                    <p>one!</p>
+                  </TabPanel>
+                  <TabPanel>
+                    <p>two!</p>
+                  </TabPanel>
+                  <TabPanel>
+                    <p>three!</p>
+                  </TabPanel>
+                </TabPanels>
               </Tabs>
             </Card>
           </RightSidePane>
         </Box>
       </Flex>
-    </Box>
+    </Grid>
   );
 };
 

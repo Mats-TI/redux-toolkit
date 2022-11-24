@@ -9,9 +9,6 @@ const RightSidePane = ({
 }) => {
 	return (
 		<Box w="100%">
-			<Heading as="h3" size="lg">
-				RightSidePane
-			</Heading>
 			<Box
 				pos="absolute"
 				top="30%"

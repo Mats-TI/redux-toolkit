@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { useAddTopicMutation, useUpdateTopicMutation } from "./services/topicApi";
+import { useAddTopicMutation, useUpdateTopicMutation } from "./php/topicApi";
 import { TabPanel, useToast, ButtonGroup, IconButton, Button } from '@chakra-ui/react';
 import { Plus } from 'react-feather';
 import PopoverForm from '../../../components/PopoverForm';

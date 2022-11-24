@@ -3,24 +3,20 @@ import { Tabs, Tab, TabList, TabPanels } from '@chakra-ui/react';
 import _ from 'lodash';
 import { XCircle } from 'react-feather';
 
-const TopicDetail = ({ currentTopic }) => {
 
+const TopicDetail = ({ currentTopic }) => {
   const filtered = currentTopic.filter(function (el) {
     return el != null;
   });
-
   const uniqueFiltered = _.uniqBy(filtered, 'id');
-
   const handleCloseTab = (e) => {
     e.preventDefault();
     alert("Close");
   };
-
   return (
 
 <>
 {uniqueFiltered && uniqueFiltered.length ? 
-
     <Tabs variant='soft-rounded' colorScheme='green'>
       <TabList>
           {uniqueFiltered?.map((topic) => (
@@ -39,10 +35,8 @@ const TopicDetail = ({ currentTopic }) => {
           ))}    
       </TabPanels>
     </Tabs>
-
  : <p>Empty</p>}
 </>
-
   );
 };
 

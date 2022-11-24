@@ -1,7 +1,7 @@
 import { Box, Button, Heading, Select, Stack } from "@chakra-ui/react";
 import React from "react";
 import TopicsList from "../features/apps/topic/TopicsList";
-import CategoriesList from "../features/categories/CategoriesList";
+import CategoriesList from "../features/categories/php/CategoriesList";
 
 const LeftSidePane = ({
 	showLeftSidebar,
@@ -16,7 +16,6 @@ const LeftSidePane = ({
 				top="30%"
 				left="96%"
 				w={showLeftSidebar ? 35 : 70}
-				height={35}
 				p={showLeftSidebar ? 2 : 0}
 				display="flex"
 				alignItems="center"
