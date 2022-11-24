@@ -16,7 +16,7 @@ const TopicApp = () => {
   const [currentTopicId, setCurrentTopicId] = useState(null);
   const [currentTopic, setCurrentTopic] = useState([]);
   const [selection, setSelection] = useState([]);
-  const [showLeftSidebar, setShowLeftSidebar] = useState(false);
+  const [showLeftSidebar, setShowLeftSidebar] = useState(true);
   const [showRightSidebar, setShowRightSidebar] = useState(false);
   const { Meta } = Card;
   const { Title } = Typography;
