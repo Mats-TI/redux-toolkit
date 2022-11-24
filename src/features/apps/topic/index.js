@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TopicsList from "./TopicsList";
 import TopicDetail from "./TopicDetail";
-import CategoriesList from "../../categories/php/CategoriesList";
+import CategoriesList from "../../categories/CategoriesList";
 import { useGetTopicsMutation, useGetTopicByIdQuery, useGetTopicsByCategoryIdQuery } from './php/topicApi';
 import { Empty, Typography, Row, Col, Avatar, Card, Button, Switch } from 'antd';
 import { AbsoluteCenter, Grid, GridItem, Box,Flex, Tabs, TabList, Tab, TabPanels, TabPanel } from '@chakra-ui/react'

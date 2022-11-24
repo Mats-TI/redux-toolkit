@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import CategoryApiService from "../../Service/categoryService";
+import CategoryApiService from "../../../Service/categoryService";
 
 const initialState = [];
 

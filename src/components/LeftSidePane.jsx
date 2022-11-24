@@ -1,7 +1,7 @@
 import { Box, Button, Heading, Select, Stack } from "@chakra-ui/react";
 import React from "react";
 import TopicsList from "../features/apps/topic/TopicsList";
-import CategoriesList from "../features/categories/php/CategoriesList";
+import CategoriesList from "../features/categories/CategoriesList";
 
 const LeftSidePane = ({
 	showLeftSidebar,
