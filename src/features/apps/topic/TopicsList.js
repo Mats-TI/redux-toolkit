@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import TopicItem from './TopicItem';
 import TopicPagination from './TopicPagination';
 import { useTopicsQuery } from './services/topicApi';
+import { getMultiple } from './slices/topicSlice';
 import {
   Heading,
   Spinner,
@@ -36,14 +37,17 @@ export default function TopicsList({ filterTopics, getTopic }) {
   const pageSize = 10;
   const [minIndex, setMinIndex] = useState(0);
   const [maxIndex, setMaxIndex] = useState(0);
-  const [current, setCurrent] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
   const dispatch = useDispatch()
 
+
+  // useEffect(() => {
+  //   dispatch(getMultiple(currentPage));
+  // }, [dispatch, currentPage]);
+
   useEffect(
     () => {
-      // dispatch(useTopicsQuery.topics(current));
-
       if(topics){
         setMinIndex(0);
         setMaxIndex(pageSize);
@@ -51,12 +55,12 @@ export default function TopicsList({ filterTopics, getTopic }) {
         console.log("total page:" + JSON.stringify(topics.meta.totalCount[0].results));
       }
     },
-    [topics, current]
+    [topics]
   );
   const handleChange = (page) => {
     setMinIndex( (page - 1) * pageSize );
     setMaxIndex( page * pageSize );
-    setCurrent(page);
+    setCurrentPage(page);
   };
   const [messageApi, contextHolder] = message.useMessage();
   const info = () => {
@@ -147,7 +151,7 @@ export default function TopicsList({ filterTopics, getTopic }) {
       </div>
       <Pagination
           className='ml-5'
-          current={current}
+          currentPage={currentPage}
           onChange={handleChange}
           pageSize={pageSize}
           total={totalPage}
