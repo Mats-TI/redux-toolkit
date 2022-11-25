@@ -15,7 +15,7 @@ import useToggle from '../../../hooks/useToggle';
 import { Input, Button, Tooltip, Space, Popover, Tabs, Typography, Row, Col, Avatar, Card, Skeleton, Switch, Affix, message, Pagination, Badge } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 
-export default function TopicsList({ filterTopics, getTopic }) {
+export default function TopicsList({ getTopic, currentCategory }) {
 
   const [selectCheck, setSelectCheck] = useToggle();
   const [currentPage, setCurrentPage] = useState(1);
@@ -28,20 +28,15 @@ export default function TopicsList({ filterTopics, getTopic }) {
     isSuccess,
     isError,
     error
-  } = useTopicsQuery(currentPage);
+  } = useTopicsQuery({currentPage, currentCategory});
   const { Search } = Input;
   const { Title } = Typography;
-  // console.log("topics: " + JSON.stringify(topics));
-
-  if (filterTopics) {
-    topics=filterTopics;
-  }
+  // console.log("topics - currentCategory: " + JSON.stringify(currentCategory));
 
   useEffect(
     () => {
       if(topics){
         setTotalPage(topics.meta.totalCount[0].results);
-        // console.log("total page:" + JSON.stringify(topics.meta.totalCount[0].results));
       }
     },
     [topics]
@@ -138,6 +133,7 @@ export default function TopicsList({ filterTopics, getTopic }) {
       <Pagination
           className='ml-5'
           currentPage={currentPage}
+          currentCategory={currentCategory}
           onChange={handleChange}
           // pageSize={pageSize}
           total={totalPage}

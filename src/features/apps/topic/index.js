@@ -4,22 +4,25 @@ import TopicsList from "./TopicsList";
 import TopicDetail from "./TopicDetail";
 import CategoriesList from "../../categories/CategoriesList";
 import { useGetTopicsMutation, useGetTopicByIdQuery, useGetTopicsByCategoryIdQuery } from './php/topicApi';
-import { Empty, Typography, Row, Col, Avatar, Card, Button, Switch } from 'antd';
+import { Input, Empty, Typography, Row, Col, Avatar, Card, Button, Switch, Collapse } from 'antd';
 import { AbsoluteCenter, Grid, GridItem, Box,Flex, Tabs, TabList, Tab, TabPanels, TabPanel } from '@chakra-ui/react'
 import LeftSidePane from "../../../components/LeftSidePane";
 import RightSidePane from "../../../components/RightSidePane";
+import PopoverForm from '../../../components/PopoverForm';
 
 const TopicApp = () => {
   const [filter, setFilter] = useState(false);
-  const [currentCategory, setCurrentCategory] = useState(null);
+  const [currentCategory, setCurrentCategory] = useState(0);
   const [currentCategoryId, setCurrentCategoryId] = useState(null); // initialize with skipToken to skip at first
   const [currentTopicId, setCurrentTopicId] = useState(null);
   const [currentTopic, setCurrentTopic] = useState([]);
   const [selection, setSelection] = useState([]);
   const [showLeftSidebar, setShowLeftSidebar] = useState(true);
   const [showRightSidebar, setShowRightSidebar] = useState(false);
+  const { Search } = Input;
   const { Meta } = Card;
   const { Title } = Typography;
+  const { Panel } = Collapse;
 
   const categoryChangeHandler = (data) => {
     setSelection(data);
@@ -55,7 +58,6 @@ const TopicApp = () => {
       <Flex mt="1px" gap={2} pos="relative">
         <Box
           boxShadow="2xl"
-          p="2rem"
           bg="white"
           w="30%"
           pos="absolute"
@@ -76,6 +78,7 @@ const TopicApp = () => {
             />
             <TopicsList
               getTopic={getTopic}
+              currentCategory={currentCategory}
               filterTopics={filterTopics}
             />
           </LeftSidePane>
@@ -116,37 +119,87 @@ const TopicApp = () => {
             setShowRightSidebar={setShowRightSidebar}
             showRightSidebar={showRightSidebar}
           >
-            <Card
-              bordered={true}
-              hoverable="true"
-              style={{ border: 1, width: 300, marginTop: 16 }}
-            >
+              <Card hoverable="true" style={{ border:2, width: 300, marginTop: 16 }}>
               <Row>
                 <Col span={4}>
                   <Avatar src="https://joeschmoe.io/api/v1/random" />
-                </Col>
+                  </Col>
                 <Col span={20}>
                   <Title level={5}>Topic author</Title>
-                  <p className="text-muted">
-                    Not assigned to any user. <Button>Invite!</Button>
-                  </p>
+                  <p className="text-muted">Not assigned to any user. <Button>Invite!</Button></p>
                 </Col>
               </Row>
+                <Row>
+                  <Col span={24}>
+                  {/* defaultActiveKey={['1']}  */}
+                    <Collapse ghost>
+                      <Panel header="Content Analyzer" key="1">
+                          <table className="table">
+                            <tr>
+                              <td>Word Count</td>
+                              <td> 100 / 1000</td>
+                            </tr>
+                            <tr>
+                              <td>#H1 tag</td>
+                              <td> 0 / 5</td>
+                            </tr>
+                            <tr>
+                              <td>#Paragraphs</td>
+                              <td> 0 / 20</td>
+                            </tr>
+                          </table>
+                          <p>Topic Comments</p>
+                      </Panel>
+                      <Panel header="Comments" key="2">
+                          <p>List of comments about the topic.</p>
+                      </Panel>
+                    </Collapse>
+                  </Col>
+                </Row>
             </Card>
-
-            <Card
-              hoverable="true"
-              style={{ border: 2, width: 300, marginTop: 16 }}
-            >
+            <Card hoverable="true" style={{ border:2, width: 300, marginTop: 16 }}>
               <Tabs>
                 <TabList>
-                  <Tab>One</Tab>
+                  <Tab>Library</Tab>
                   <Tab>Two</Tab>
                   <Tab>Three</Tab>
                 </TabList>
                 <TabPanels>
                   <TabPanel>
-                    <p>one!</p>
+                    <Row className='mt-0'>
+                      <Col span={21}>
+                        <Search
+                                placeholder="search library"
+                                allowClear
+                                style={{
+                                  width: 190,
+                                }}
+                              />
+                      </Col>
+                      <Col span={3}>
+                        <PopoverForm />
+                      </Col>
+                    </Row>
+                    <Row className='mt-2'>
+                      <Col span={14}>
+                        <p className='small pl-3 text-muted'>0 items</p>
+                      </Col>
+                      <Col span={10}>
+                        <Switch size="small" defaultChecked /> <span className='pl-1 small text-muted' >Details</span>
+                      </Col>
+                    </Row>
+                    
+                      <Card bordered={true} hoverable="true" style={{ marginTop: 0, marginRight: 20 }} className="slim-card p-0 mt-2 m-0">
+                        <Row className="p-0">
+                          <Col span={24} className="pl-2">
+                              <Title level={5}>Description</Title>
+                              <div className='details small text-muted'>
+                                <p>Word count: 100</p>
+                              </div>
+                          </Col>
+                        </Row>
+                      </Card>
+
                   </TabPanel>
                   <TabPanel>
                     <p>two!</p>

@@ -5,7 +5,8 @@ const topics = require('../services/topics');
 /* GET topics. */
 router.get('/', async function(req, res, next) {
   try {
-    res.json(await topics.getMultiple(req.query.page));
+    res.json(await topics.getMultiple(req.query.currentPage, req.query.currentCategory ));
+    // console.log(`IDs routes `, req.query, req.query.currentPage, req.query.currentCategory);
   } catch (err) {
     console.error(`Error while getting topics `, err.message);
     next(err);

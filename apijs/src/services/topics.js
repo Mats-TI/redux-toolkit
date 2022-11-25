@@ -2,16 +2,19 @@ const db = require('./db');
 const helper = require('../helper');
 const config = require('../config');
 
-async function getMultiple(currentPage = 1){
-  console.log("page from express js: " + currentPage);
+async function getMultiple(currentPage = 1, currentCategory = 0){
+  let byWHERE
+  if(currentCategory !== '0'){
+    byWHERE = `WHERE category_id=${currentCategory}`;
+  }
   const offset = helper.getOffset(currentPage, config.listPerPage);
   const rows = await db.query(
     `SELECT *
-    FROM topics LIMIT ${offset},${config.listPerPage}`
+    FROM topics ${byWHERE} LIMIT ${offset},${config.listPerPage}`
   );
   const totalCount = await db.query(
     `SELECT count(id) as "results"
-    FROM topics`
+    FROM topics ${byWHERE}`
   );
   const data = helper.emptyOrRows(rows);
   const meta = {currentPage, totalCount};

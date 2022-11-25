@@ -5,7 +5,7 @@ import { PlusOutlined } from '@ant-design/icons';
 
 const CategoriesList = ({ currentCategory, categoryChangeHandler, selection }) => {
   const { data, error, isLoading, isSuccess } = useCategoriesQuery();
-  const categoriesFinal = [{id:'', title:'All categories'}, ...new Set(data)];
+  const categoriesFinal = [{id:'0', title:'All categories'}, ...new Set(data)];
 
   let content = categoriesFinal.map(({ id, title}) => ({
     value : id, label: title 
@@ -20,12 +20,12 @@ const CategoriesList = ({ currentCategory, categoryChangeHandler, selection }) =
       {isSuccess && (    
         <div style={{padding: 20}}>
           <Select
-            defaultValue="All categories"
+            defaultValue="0"
             style={{
               width: 120,
             }}
             onChange={categoryChangeHandler}
-            allowClear
+            // allowClear
             options={content}
           /> 
           <Tooltip title="Create new category">

@@ -12,12 +12,13 @@ export const topicApi = createApi({
   }),
   endpoints: (builder) => ({
     topics: builder.query({
-      query: (page) => {
-        // const { page } = arg;
-        console.log('arg page ID: ', page);
+      query: ({currentPage, currentCategory}) => {
+        // const { currentPage, currentCategory } = arg;
+        // console.log('arg page ID 1: ', currentPage, currentCategory);
+        // console.log('arg page ID 2: ', `/group/${currentPage}/${currentCategory}`);
         return {
           url: '/',
-          params: { page },
+          params: { currentPage, currentCategory },
           method: 'GET',
         };
       },
