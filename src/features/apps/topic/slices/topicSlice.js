@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { topicApi } from '../php/topicApi';
+import { topicApi } from '../services/topicApi';
 
 const topicSlice = createSlice({
   name: 'topics',
@@ -18,12 +18,7 @@ const topicSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addMatcher(
-      topicApi.endpoints.getTopics.matchFulfilled,
-      (state, action) => {
-        state.topics = action.payload;
-      }
-    );
+
   },
 });
 

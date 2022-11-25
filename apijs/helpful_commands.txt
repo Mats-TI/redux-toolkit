@@ -1,0 +1,5 @@
+#Clear NPM's cache:
+npm cache clean -f
+
+#Install a little helper called 'n'
+npm install -g n  

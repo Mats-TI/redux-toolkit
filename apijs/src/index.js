@@ -1,13 +1,26 @@
 const express = require("express");
 const app = express();
-const cors = require('cors');
-
-app.use(cors({
-  origin: '*'
-}));
+const port = 3000;
+const topicsRouter = require("./routes/topics");
+var cors = require('cors');
+app.use(cors());
 app.use(express.json());
-app.use("/", require("./topics"));
-app.use("/", require("./categories"));
-app.listen(8085, () => {
-  console.log("Listening on Port 8085");
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
+app.get("/", (req, res) => {
+  res.json({ message: "ok" });
+});
+app.use("/topics", topicsRouter);
+/* Error handler middleware */
+app.use((err, req, res, next) => {
+  const statusCode = err.statusCode || 500;
+  console.error(err.message, err.stack);
+  res.status(statusCode).json({ message: err.message });
+  return;
+});
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`);
 });

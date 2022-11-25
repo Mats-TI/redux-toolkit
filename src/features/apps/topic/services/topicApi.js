@@ -4,19 +4,13 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const topicApi = createApi({
   reducerPath: 'topicApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:8085/topics',
+    baseUrl: 'http://localhost:3000/topics',
     prepareHeaders: (headers, { getState }) => {
       headers.set("Content-Type", "application/json");
       return headers;
     }
   }),
   endpoints: (builder) => ({
-    getTopics: builder.mutation({
-      query: () => ({
-        url: '/read.php',
-        method: 'GET',
-      }),
-    }),
     topics: builder.query({
       query: () => ""
     }),
@@ -67,14 +61,7 @@ export const topicApi = createApi({
         };
       },
     }),
-    putAddTopics: builder.mutation({
-      query: (body) => ({
-        url: '/todos/1',
-        method: 'PUT',
-        body,
-      }),
-    }),
   }),
 });
 
-export const { useTopicsQuery, useGetTopicsMutation, useGetTopicByIdQuery, useAddTopicMutation, useUpdateTopicMutation, useDeleteTopicMutation, useGetTopicsByCategoryIdQuery, usePutAddTopicsMutation } = topicApi;
+export const { useTopicsQuery, useGetTopicByIdQuery, useAddTopicMutation, useUpdateTopicMutation, useDeleteTopicMutation, useGetTopicsByCategoryIdQuery } = topicApi;

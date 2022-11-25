@@ -1,8 +1,8 @@
 import React, { useState, useEffect, forwardRef } from 'react';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import TopicItem from './TopicItem';
 import TopicPagination from './TopicPagination';
-import { useTopicsQuery, useGetTopicsMutation } from './php/topicApi';
+import { useTopicsQuery } from './services/topicApi';
 import {
   Heading,
   Spinner,
@@ -17,7 +17,7 @@ import { EditOutlined } from '@ant-design/icons';
 export default function TopicsList({ filterTopics, getTopic }) {
 
   const {
-    data: topics,
+    data:topics,
     isLoading,
     isSuccess,
     isError,
@@ -26,28 +26,32 @@ export default function TopicsList({ filterTopics, getTopic }) {
   const { Search } = Input;
   const { Title } = Typography;
 
-  console.log(topics);
+  console.log("topics: " + JSON.stringify(topics));
 
   if (filterTopics) {
     topics=filterTopics;
   }
 
   const [selectCheck, setSelectCheck] = useToggle();
-  const pageSize = 5;
+  const pageSize = 10;
   const [minIndex, setMinIndex] = useState(0);
   const [maxIndex, setMaxIndex] = useState(0);
   const [current, setCurrent] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
+  const dispatch = useDispatch()
 
   useEffect(
     () => {
+      // dispatch(useTopicsQuery.topics(current));
+
       if(topics){
         setMinIndex(0);
         setMaxIndex(pageSize);
-        setTotalPage(topics.length);
+        setTotalPage(topics.meta.totalCount[0].results);
+        console.log("total page:" + JSON.stringify(topics.meta.totalCount[0].results));
       }
     },
-    [topics]
+    [topics, current]
   );
   const handleChange = (page) => {
     setMinIndex( (page - 1) * pageSize );
@@ -82,7 +86,7 @@ export default function TopicsList({ filterTopics, getTopic }) {
       </div>
       <Row className='mt-2'>
         <Col span={17}>
-          <p className='small pl-3 text-muted'>{topics.length} topics</p>
+          <p className='small pl-3 text-muted'>{topics.meta.totalCount[0].results} topics</p>
         </Col>
         <Col span={7}>
           <Switch onClick={info} size="small" defaultChecked /> <span className='pl-1 small text-muted' >Details</span>
@@ -112,7 +116,7 @@ export default function TopicsList({ filterTopics, getTopic }) {
         </Col>
       </Row>
       <div className='' style={{ maxHeight: 360, overflow: 'auto', width: 320, marginTop: 2, marginBottom: 10, padding:0 }} >
-      {topics.map(
+      {topics.data.map(
             (topic, index) =>
               index >= minIndex &&
               index < maxIndex && (
