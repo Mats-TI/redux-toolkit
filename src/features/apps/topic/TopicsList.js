@@ -17,49 +17,37 @@ import { EditOutlined } from '@ant-design/icons';
 
 export default function TopicsList({ filterTopics, getTopic }) {
 
+  const [selectCheck, setSelectCheck] = useToggle();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(0);
+  const dispatch = useDispatch()
+
   const {
     data:topics,
     isLoading,
     isSuccess,
     isError,
     error
-  } = useTopicsQuery();
+  } = useTopicsQuery(currentPage);
   const { Search } = Input;
   const { Title } = Typography;
-
-  console.log("topics: " + JSON.stringify(topics));
+  // console.log("topics: " + JSON.stringify(topics));
 
   if (filterTopics) {
     topics=filterTopics;
   }
 
-  const [selectCheck, setSelectCheck] = useToggle();
-  const pageSize = 10;
-  const [minIndex, setMinIndex] = useState(0);
-  const [maxIndex, setMaxIndex] = useState(0);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPage, setTotalPage] = useState(0);
-  const dispatch = useDispatch()
-
-
-  // useEffect(() => {
-  //   dispatch(getMultiple(currentPage));
-  // }, [dispatch, currentPage]);
-
   useEffect(
     () => {
       if(topics){
-        setMinIndex(0);
-        setMaxIndex(pageSize);
         setTotalPage(topics.meta.totalCount[0].results);
-        console.log("total page:" + JSON.stringify(topics.meta.totalCount[0].results));
+        // console.log("total page:" + JSON.stringify(topics.meta.totalCount[0].results));
       }
     },
     [topics]
   );
+
   const handleChange = (page) => {
-    setMinIndex( (page - 1) * pageSize );
-    setMaxIndex( page * pageSize );
     setCurrentPage(page);
   };
   const [messageApi, contextHolder] = message.useMessage();
@@ -121,9 +109,7 @@ export default function TopicsList({ filterTopics, getTopic }) {
       </Row>
       <div className='' style={{ maxHeight: 360, overflow: 'auto', width: 320, marginTop: 2, marginBottom: 10, padding:0 }} >
       {topics.data.map(
-            (topic, index) =>
-              index >= minIndex &&
-              index < maxIndex && (
+            (topic, index) => (
                 <Badge.Ribbon color="blue" text={topic.post_status} size="small" className=" mr-2 mt-0" key={topic.id}>
                   <Card bordered={true} hoverable="true" style={{ width: 300, marginTop: 0, marginRight: 20, padding:0 }} className="slim-card p-0 ml-1 mt-2 m-0">
                     <Row className="p-0">
@@ -153,7 +139,7 @@ export default function TopicsList({ filterTopics, getTopic }) {
           className='ml-5'
           currentPage={currentPage}
           onChange={handleChange}
-          pageSize={pageSize}
+          // pageSize={pageSize}
           total={totalPage}
           style={{ bottom: "0px" }}
         />

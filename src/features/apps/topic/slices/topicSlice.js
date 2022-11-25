@@ -28,7 +28,7 @@ const topicSlice = createSlice({
   },
   extraReducers: (builder) => {
     // builder.addMatcher(
-    //   topicApi.endpoints.getMultiple.matchFulfilled,
+    //   topicApi.endpoints.topics.matchFulfilled,
     //   (state, action) => {
     //     state.topics = action.payload.data;
     //     state.isFetching = false;

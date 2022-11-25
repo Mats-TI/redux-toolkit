@@ -2,8 +2,9 @@ const db = require('./db');
 const helper = require('../helper');
 const config = require('../config');
 
-async function getMultiple(page = 1){
-  const offset = helper.getOffset(page, config.listPerPage);
+async function getMultiple(currentPage = 1){
+  console.log("page from express js: " + currentPage);
+  const offset = helper.getOffset(currentPage, config.listPerPage);
   const rows = await db.query(
     `SELECT *
     FROM topics LIMIT ${offset},${config.listPerPage}`
@@ -13,7 +14,7 @@ async function getMultiple(page = 1){
     FROM topics`
   );
   const data = helper.emptyOrRows(rows);
-  const meta = {page, totalCount};
+  const meta = {currentPage, totalCount};
 
   return {
     data,

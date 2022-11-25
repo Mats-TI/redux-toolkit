@@ -12,7 +12,15 @@ export const topicApi = createApi({
   }),
   endpoints: (builder) => ({
     topics: builder.query({
-      query: () => ""
+      query: (page) => {
+        // const { page } = arg;
+        console.log('arg page ID: ', page);
+        return {
+          url: '/',
+          params: { page },
+          method: 'GET',
+        };
+      },
     }),
     getTopicById: builder.query({
       query: (arg) => {
