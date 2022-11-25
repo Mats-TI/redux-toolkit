@@ -5,6 +5,8 @@ import TopicApp from "./features/apps/topic";
 import Navbar from "./components/layout/Toolbar";
 import Layout from "./components/layout/Layout";
 import styles from './index.css';
+import AuthPage from "./components/layout/AuthPage";
+import 'antd/dist/reset.css';
 
 function App() {
 	return (
@@ -13,6 +15,7 @@ function App() {
 				<Routes>
 					<Route path="/" element={<TopicApp />} />
 					<Route path="/topics" element={<TopicApp />} />
+					<Route path="/authentication" element={<AuthPage />} />
 				</Routes>
 			</Layout>
 		</>
