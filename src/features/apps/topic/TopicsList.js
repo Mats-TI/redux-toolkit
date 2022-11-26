@@ -11,15 +11,16 @@ import {
 } from "@chakra-ui/react";
 import { Star } from 'react-feather';
 import PopoverForm from '../../../components/PopoverForm';
+import SearchBar from '../../../components/SearchBar';
 import useToggle from '../../../hooks/useToggle';
 import { Input, Button, Tooltip, Space, Popover, Tabs, Typography, Row, Col, Avatar, Card, Skeleton, Switch, Affix, message, Pagination, Badge } from 'antd';
-import { EditOutlined } from '@ant-design/icons';
+import { EditOutlined, FilterOutlined } from '@ant-design/icons';
 
 export default function TopicsList({ getTopic, currentCategory }) {
-
   const [selectCheck, setSelectCheck] = useToggle();
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
+  const [searchQuery, setSearchQuery] = useState("");
   const dispatch = useDispatch()
 
   const {
@@ -99,7 +100,7 @@ export default function TopicsList({ getTopic, currentCategory }) {
             }
         </Col>
         <Col span={4}>
-          <PopoverForm />
+          <PopoverForm icon={<FilterOutlined />} />
         </Col>
       </Row>
       <div className='' style={{ maxHeight: 360, overflow: 'auto', width: 320, marginTop: 2, marginBottom: 10, padding:0 }} >

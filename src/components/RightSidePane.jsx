@@ -11,8 +11,8 @@ const RightSidePane = ({
 		<Box w="100%">
 			<Box
 				pos="absolute"
-				top="30%"
-				right="96%"
+				top="45%"
+				right="100%"
 				w={showRightSidebar ? 35 : 70}
 				height={35}
 				p={showRightSidebar ? 2 : 0}
