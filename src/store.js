@@ -4,7 +4,7 @@ import { setupListeners } from "@reduxjs/toolkit/query";
 import categorySlice from './features/categories/categorySlice';
 import topicSlice from './features/apps/topic/slices/topicSlice';
 import { topicApi } from './features/apps/topic/services/topicApi';
-import { categoryApi } from './features/categories/php/categoryApi';
+import { categoryApi } from './features/categories/categoryApi';
 
 const reducer = {
   categories: categorySlice,

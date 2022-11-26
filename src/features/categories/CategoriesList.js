@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useCategoriesQuery } from './php/categoryApi';
+import { useCategoriesQuery } from './categoryApi';
 import { Select, Button, Tooltip } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
 const CategoriesList = ({ currentCategory, categoryChangeHandler, selection }) => {
-  const { data, error, isLoading, isSuccess } = useCategoriesQuery();
-  const categoriesFinal = [{id:'0', title:'All categories'}, ...new Set(data)];
+  const { data=[], error, isLoading, isSuccess } = useCategoriesQuery();
+  const categoriesFinal = [{id:'0', title:'All categories'}, ...new Set(data.data)];
 
   let content = categoriesFinal.map(({ id, title}) => ({
     value : id, label: title 
