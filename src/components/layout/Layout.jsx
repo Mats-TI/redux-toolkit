@@ -5,7 +5,7 @@ import Toolbar from "./Toolbar";
 
 const Layout = ({ children }) => {
 	return (
-		<Box bg="#d9d9d9" color="#3b3b3b" minHeight="100vh" height="100%">
+		<Box bg="#d9d9d9" color="#3b3b3b" minHeight="100vh" height="100vh">
 			<Sidebar />
 			<Box marginLeft="65px" height="100%">
 				<Box height="8%">

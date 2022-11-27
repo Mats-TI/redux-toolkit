@@ -86,7 +86,6 @@ const Sidebar = () => {
 						</svg>
 					</NavLink>
 				</Tooltip>
-
 			</Flex>
 		</Box>
 	);

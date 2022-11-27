@@ -13,9 +13,10 @@ const LeftSidePane = ({
 		<Box w="100%">
 			<Box
 				pos="absolute"
-				top="30%"
+				top="250px"
 				left="96%"
 				w={showLeftSidebar ? 35 : 70}
+				height={35}
 				p={showLeftSidebar ? 2 : 0}
 				display="flex"
 				alignItems="center"
