@@ -11,20 +11,20 @@
   </p>
 </div>
 
-#Content Management Application using REACT, REDUX TOOLKIT & RTK Query
+<h3>Content Management Application using REACT, REDUX TOOLKIT & RTK Query</h3>
 Main goal is to learn REACT by doing practical and realworld application using RTK & RTK query with backend API — Express JS, Mysql DB.
 
-#About
+<h3>About</h3>
 Content management for content writers with an ability to write, edit and manage 1000s of topics in one place, which will eventually be integrated with WordPress, hence the posts can be pushed to the wordpress website directly. Plus, loads of other features such as content mixer, library consisting of millions of ready to use text snippets, clever headings, quotes, news, and other content elements which can be used to generate content easily with minimal writing. Also, content template library - which will be used to auto-generate city & keyword based pages on the fly. 
 
 Further along the way, multiple editors/writers/marketers can collaborate, invite, share comments about the article, and improve SEO standard by automating best practices.
 
-#Group Learning by Doing Real, Practical and Live Project
+<h3>Group Learning by Doing Real, Practical and Live Project</h3>
 - Code at least one component per week.
 - Build experience by reviewing and correcting each other's codes.
 - Share ready to use react code snippets, hooks, videos, ebooks, and just about anything.
 
-#Components — to develop overall skills and experience in building enterprise level apps.
+<h3>Components — to develop overall skills and experience in building enterprise level apps.</h3>
 - Use as many components as possible —
 - Layout, Sidebar, Sidebar Panels
 - Toggle Switch
@@ -39,11 +39,11 @@ Further along the way, multiple editors/writers/marketers can collaborate, invit
 
 ![image](https://raw.githubusercontent.com/newlaravelcoder/redux-toolkit/5952d1df18a5a82f07de9f01bf0387998dfd1a3d/preview.png)
 
-#Project Management
+<h3>Project Management</h3>
 - Using Slack for the communication. If interested and commit few hours per week, request an invite for the Slack channel.
 
-#Coding Standards
+<h3>Coding Standards</h3>
 - Improve industry-best coding standards and best practices as we go along.
 
-#Frontend
+<h3>Frontend</h3>
 - Using @chakra-ui and @antd for the UI design.
