@@ -25,6 +25,8 @@ Further along the way, multiple writers can collaborate, invite, share comments 
 - User Invite module
 - and every other functionalities (UI/UX) required in any enterprise apps.
 
+![image](https://raw.githubusercontent.com/newlaravelcoder/redux-toolkit/5952d1df18a5a82f07de9f01bf0387998dfd1a3d/preview.png)
+
 #Coding Standards
 - With peer review team, ensure all the codes are industry standards.
 
